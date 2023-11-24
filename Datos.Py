@@ -14,10 +14,10 @@ while menu_option != 4:
     elif menu_option == 2:
         Funcion.Ver_desarrolladores()
     elif menu_option == 3:
-        # Opción para imprimir el contenido del archivo JSON
-        # (puedes implementar esta función si lo deseas)
-        pass
+        Funcion.Modificar_Usuario()
+              
     elif menu_option == 4:
         print("Saliendo del programa.")
     else:
         print("Opción no válida. Inténtelo de nuevo.")
+        

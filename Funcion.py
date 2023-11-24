@@ -30,7 +30,7 @@ class Empleado():
         else:
             self.id=len(json_Developers) + 1 # toma longitud y crea
         self.Nombre= Nombre
-        self.Skill=Skill
+        self.Skill=self.Skill = [] if Skill is None else Skill if isinstance(Skill, list) else [Skill] # Verificar si la variable Skill es una instancia de la clase list.
         self.añ_exp=añ_exp
         
     
@@ -68,7 +68,7 @@ listDS = JsonDesarrolladores()
 def  menu():
     print("1. Agregar Desarrollador")
     print("2. Mostrar Desarrolladores")
-    print("3. Imprimir Contenido del Archivo JSON")
+    print("3. Modificar Desarrollador")
     print("4. Salir")
 
 #Imprimir Json
@@ -91,6 +91,35 @@ def Nuevo_Usuario():
     print()
     print(f"El Desarrollador {Nombre} ha sido agregado exitosamente.")
     print()
+
+#Modificar Desarrollador
+
+def Modificar_Usuario():
+    Ver_desarrolladores()  # Mostrar La Lista De Desarrolladores
+    id_modificar = int(input("Ingrese Id Del Desarrollador a Modificar: "))
+    # Buscar el desarrollador por su ID
+    desarrollador_a_modificar = next((dev for dev in listDS if dev.id == id_modificar), None)
+    
+    if desarrollador_a_modificar:
+        # Nombre
+        print(f"Modificacion El Desarrollador Con Id {desarrollador_a_modificar.id}:")
+        print(f"Nombre actual: {desarrollador_a_modificar.Nombre}")
+        nuevo_nombre = input("Ingrese el nuevo nombre (o presione Enter para dejarlo sin cambios): ")
+        desarrollador_a_modificar.Nombre = nuevo_nombre if nuevo_nombre else desarrollador_a_modificar.Nombre
+        # Habilidades
+        print(f"Habilidades actuales: {desarrollador_a_modificar.Skill}")
+        nuevo_skill = input("Ingrese las nuevas habilidades (o presione Enter para dejarlas sin cambios): ")
+        if nuevo_skill:
+            desarrollador_a_modificar.Skill.extend(nuevo_skill.split(','))  # Extender la lista de habilidades
+        # Años Experiencia
+        print(f"Años de experiencia actuales: {desarrollador_a_modificar.añ_exp}")
+        nuevo_añ_exp = input("Ingrese los nuevos años de experiencia (o presione Enter para dejarlos sin cambios): ")
+        desarrollador_a_modificar.añ_exp = float(nuevo_añ_exp) if nuevo_añ_exp else desarrollador_a_modificar.añ_exp
+
+        SaveDesarrolladores(listDS)
+        print(f"Desarrollador con ID {desarrollador_a_modificar.id} modificado exitosamente.")
+    else:
+        print(f"No se encontró ningún desarrollador con ID {id_modificar}.")
 
 # El siguiente código solo se ejecutará si este script se ejecuta directamente
 if __name__ == "__main__":
