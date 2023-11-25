@@ -15,9 +15,10 @@ while menu_option != 4:
         Funcion.Ver_desarrolladores()
     elif menu_option == 3:
         Funcion.Modificar_Usuario()
-              
+        pass
     elif menu_option == 4:
         print("Saliendo del programa.")
-    else:
-        print("Opción no válida. Inténtelo de nuevo.")
-        
+try:
+    pass
+except ValueError:
+    print("Opción no válida. Inténtelo de nuevo.")

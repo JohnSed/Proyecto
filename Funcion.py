@@ -2,7 +2,7 @@ import json
 #Usaremos Json Para Guardar Los Datos.
 json_Developers= "DataBaseDevelopers.json"
 
-#Abrir Archivo o Guardar Json
+#Abrir Archivo Json
 def JsonDesarrolladores():
     try:
         with open(json_Developers, "r") as archivo:
@@ -16,7 +16,9 @@ def JsonDesarrolladores():
         return []#Devuleve Lista Vacia
     except json.decoder.JSONDecodeError:# Excepcion Si EL Json esta mal definido o sus cmapos esta vacio
         return []#Devuleve Lista Vacia
-def SaveDesarrolladores(Desarrollador):
+    
+#Guardar Informacion En Json
+def SaveDesarrolladores( Desarrollador):
     with open(json_Developers, "w") as archivo1:
         data = [{"id": dev.id, "Nombre": dev.Nombre, "Skill": dev.Skill, "añ_exp": dev.añ_exp} for dev in Desarrollador]
         json.dump(data, archivo1)
@@ -70,7 +72,8 @@ def  menu():
     print("2. Mostrar Desarrolladores")
     print("3. Modificar Desarrollador")
     print("4. Salir")
-
+    
+    
 #Imprimir Json
 def Ver_desarrolladores():
     print("\nLista de Desarrolladores:")
@@ -81,11 +84,13 @@ def Ver_desarrolladores():
 
 #Agregar Desarrollador
 def Nuevo_Usuario():
+    id=int(input("Ingrese Numero De Cedula Del Empleado: "))
     Nombre = input("Ingrese Nombre Del Empleado: ")
     Skill = input("Ingrese Habilidades (Separadas En Coma): ")
     Añ_Expe = float(input("Ingrese Su Experiencia En Años: "))
+    
 
-    Desarrollador = Empleado(Nombre,Skill,Añ_Expe)
+    Desarrollador = Empleado(Nombre,Skill,Añ_Expe,id)
     listDS.append(Desarrollador)
     SaveDesarrolladores(listDS)
     print()
@@ -119,8 +124,8 @@ def Modificar_Usuario():
         SaveDesarrolladores(listDS)
         print(f"Desarrollador con ID {desarrollador_a_modificar.id} modificado exitosamente.")
     else:
-        print(f"No se encontró ningún desarrollador con ID {id_modificar}.")
+        print(f"No se encontró ningún desarrollador con ID {id_modificar}")
 
 # El siguiente código solo se ejecutará si este script se ejecuta directamente
 if __name__ == "__main__":
-    menu()
+        menu()
