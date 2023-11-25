@@ -3,22 +3,26 @@ import Funcion
 # Lista para almacenar los desarrolladores en memoria "Json"
 listDS = Funcion.JsonDesarrolladores()
 
-menu_option = 0
-while menu_option != 4:
-    Funcion.menu()
-    menu_option = int(input("Seleccione una opción: "))
+while True:
+    try: 
+        Funcion.menu()
+        menu_option = int(input("Seleccione una opción: "))
+        print()
 
-    if menu_option == 1:
-        Funcion.Nuevo_Usuario()
+        if menu_option == 1:
+            Funcion.Nuevo_Usuario()
         
-    elif menu_option == 2:
-        Funcion.Ver_desarrolladores()
-    elif menu_option == 3:
-        Funcion.Modificar_Usuario()
-        pass
-    elif menu_option == 4:
-        print("Saliendo del programa.")
-try:
-    pass
-except ValueError:
-    print("Opción no válida. Inténtelo de nuevo.")
+        elif menu_option == 2:
+            Funcion.Ver_desarrolladores()
+        elif menu_option == 3:
+            Funcion.Modificar_Usuario()
+            pass
+        elif menu_option == 4:
+            print("Saliendo del programa.")
+        else:
+            print()
+            print("Opcion Invalida, Por Favor Intente de Nuevo")
+            print()
+    except ValueError:
+        print()
+        print("Opción no válida. Inténtelo de nuevo.")

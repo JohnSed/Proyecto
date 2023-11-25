@@ -5,7 +5,7 @@ json_Developers= "DataBaseDevelopers.json"
 #Abrir Archivo Json
 def JsonDesarrolladores():
     try:
-        with open(json_Developers, "r") as archivo:
+        with open(json_Developers, "r",encoding="utf-8") as archivo:
             contenido = archivo.read()
             if contenido:
                 Empleado_Desarrollador = json.loads(contenido)
@@ -19,9 +19,9 @@ def JsonDesarrolladores():
     
 #Guardar Informacion En Json
 def SaveDesarrolladores( Desarrollador):
-    with open(json_Developers, "w") as archivo1:
+    with open(json_Developers, "w",encoding="utf-8") as archivo1:
         data = [{"id": dev.id, "Nombre": dev.Nombre, "Skill": dev.Skill, "añ_exp": dev.añ_exp} for dev in Desarrollador]
-        json.dump(data, archivo1)
+        json.dump(data, archivo1,ensure_ascii=False)
 
 #Informacion  Empleado.
 class Empleado():
@@ -30,7 +30,7 @@ class Empleado():
         if id is not None:
             self.id=id
         else:
-            self.id=len(json_Developers) + 1 # toma longitud y crea
+            self.id=id
         self.Nombre= Nombre
         self.Skill=self.Skill = [] if Skill is None else Skill if isinstance(Skill, list) else [Skill] # Verificar si la variable Skill es una instancia de la clase list.
         self.añ_exp=añ_exp
@@ -38,31 +38,7 @@ class Empleado():
     
          
 #Informacion Para Clasificacion En Tipo De Experiencia
-class Habilidades_Programacion():
-        
-        def __init__(self,lenguajes,Añ_Exp) :
-             Lenguajes_Trainer=["CSS","HTML"]
-             Lenguajes_Junior=["JavaScripa","Phyton"]+Lenguajes_Trainer
-             Lenguaje_Middle=["Java","C#","PHP"]+Lenguajes_Junior
-             Lenguaje_Senior=['Ruby', 'Go', 'Swift']+Lenguaje_Middle
-             Lenguaje_Lead=['Kotlin', 'Rust', 'TypeScript']+Lenguaje_Senior
-               #self.clasificacion = self.clasificar_habilidades(lenguajes, Lenguajes_Trainer, Lenguajes_Junior, Lenguaje_Middle, Lenguaje_Senior, Lenguaje_Lead)
-             if (hab in lenguajes for hab in Lenguaje_Lead):
-                  return ("Trainer")
-             elif (hab in lenguajes for hab in Lenguaje_Senior):
-                  return ("Senior")
-             elif  (hab in lenguajes for hab in Lenguaje_Middle):
-                  return ("Middle")
-             elif (hab in lenguajes for hab in Lenguajes_Junior):
-                  return ("Junior")
-             elif (hab in lenguajes for hab in Lenguajes_Trainer):
-                  return("Trainer")
-             else:
-                  return ("No se pudo verificar Por Favor Verifique Su Empleado!")
-             
-        #esta seria la  clasificacion de funciones sip
-        
-#Lista para almacenar los desarrolladores en memoria "Json"
+
 listDS = JsonDesarrolladores()
 
 
@@ -84,18 +60,24 @@ def Ver_desarrolladores():
 
 #Agregar Desarrollador
 def Nuevo_Usuario():
-    id=int(input("Ingrese Numero De Cedula Del Empleado: "))
-    Nombre = input("Ingrese Nombre Del Empleado: ")
-    Skill = input("Ingrese Habilidades (Separadas En Coma): ")
-    Añ_Expe = float(input("Ingrese Su Experiencia En Años: "))
-    
+    id = int(input("Ingrese Numero De Cedula Del Empleado: "))
+    # Verificar si el ID ya existe
+    id_existente = any(dev.id == id for dev in listDS)
 
-    Desarrollador = Empleado(Nombre,Skill,Añ_Expe,id)
-    listDS.append(Desarrollador)
-    SaveDesarrolladores(listDS)
-    print()
-    print(f"El Desarrollador {Nombre} ha sido agregado exitosamente.")
-    print()
+    if id_existente:
+        print(f"El ID: {id}, Ingresado Ya Existe, Por Favor Verifique Documento")
+    else:
+        # Si el ID no existe, continuar con la entrada de otros datos
+        Nombre = input("Ingrese Nombre Del Empleado: ")
+        Skill = input("Ingrese Habilidades (Separadas En Coma): ")
+        Añ_Expe = float(input("Ingrese Su Experiencia En Años: "))
+
+        # Crear la instancia de Empleado después de ingresar la información
+        Desarrollador = Empleado(Nombre, Skill, Añ_Expe, id)
+
+        listDS.append(Desarrollador)
+        SaveDesarrolladores(listDS)
+        print(f"El Desarrollador {Nombre} ha sido agregado exitosamente.")
 
 #Modificar Desarrollador
 
@@ -130,4 +112,30 @@ def Modificar_Usuario():
 if __name__ == "__main__":
         menu()
 
+
+class Habilidades_Programacion():
+        
+        def __init__(self,lenguajes,Añ_Exp) :
+             Lenguajes_Trainer=["CSS","HTML"]
+             Lenguajes_Junior=["JavaScripa","Phyton"]+Lenguajes_Trainer
+             Lenguaje_Middle=["Java","C#","PHP"]+Lenguajes_Junior
+             Lenguaje_Senior=['Ruby', 'Go', 'Swift']+Lenguaje_Middle
+             Lenguaje_Lead=['Kotlin', 'Rust', 'TypeScript']+Lenguaje_Senior
+               #self.clasificacion = self.clasificar_habilidades(lenguajes, Lenguajes_Trainer, Lenguajes_Junior, Lenguaje_Middle, Lenguaje_Senior, Lenguaje_Lead)
+             if (hab in lenguajes for hab in Lenguaje_Lead):
+                  return ("Trainer")
+             elif (hab in lenguajes for hab in Lenguaje_Senior):
+                  return ("Senior")
+             elif  (hab in lenguajes for hab in Lenguaje_Middle):
+                  return ("Middle")
+             elif (hab in lenguajes for hab in Lenguajes_Junior):
+                  return ("Junior")
+             elif (hab in lenguajes for hab in Lenguajes_Trainer):
+                  return("Trainer")
+             else:
+                  return ("No se pudo verificar Por Favor Verifique Su Empleado!")
+             
+        #esta seria la  clasificacion de funciones sip
+        
+#Lista para almacenar los desarrolladores en memoria "Json"
 # comenta
