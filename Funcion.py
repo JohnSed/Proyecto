@@ -34,11 +34,8 @@ class Empleado():
         self.Nombre= Nombre
         self.Skill=self.Skill = [] if Skill is None else Skill if isinstance(Skill, list) else [Skill] # Verificar si la variable Skill es una instancia de la clase list.
         self.añ_exp=añ_exp
-        
-    
-         
-#Informacion Para Clasificacion En Tipo De Experiencia
 
+#Lista para almacenar los desarrolladores en memoria "Json"
 listDS = JsonDesarrolladores()
 
 
@@ -112,7 +109,7 @@ def Modificar_Usuario():
 if __name__ == "__main__":
         menu()
 
-
+#Informacion Para Clasificacion En Tipo De Experiencia
 class Habilidades_Programacion():
         
         def __init__(self,lenguajes,Añ_Exp) :
@@ -137,5 +134,3 @@ class Habilidades_Programacion():
              
         #esta seria la  clasificacion de funciones sip
         
-#Lista para almacenar los desarrolladores en memoria "Json"
-# comenta
