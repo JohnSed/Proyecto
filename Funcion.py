@@ -45,6 +45,7 @@ def  menu():
     print("2. Mostrar Desarrolladores")
     print("3. Modificar Desarrollador")
     print("4. Salir")
+    print("5. Eliminar Desarrolador")
     
     
 #Imprimir Json
@@ -57,12 +58,15 @@ def Ver_desarrolladores():
 
 #Agregar Desarrollador
 def Nuevo_Usuario():
+    id = -1 
     id = int(input("Ingrese Numero De Cedula Del Empleado: "))
     # Verificar si el ID ya existe
     id_existente = any(dev.id == id for dev in listDS)
+    print(id)
 
     if id_existente:
         print(f"El ID: {id}, Ingresado Ya Existe, Por Favor Verifique Documento")
+        return False
     else:
         # Si el ID no existe, continuar con la entrada de otros datos
         Nombre = input("Ingrese Nombre Del Empleado: ")
@@ -75,6 +79,7 @@ def Nuevo_Usuario():
         listDS.append(Desarrollador)
         SaveDesarrolladores(listDS)
         print(f"El Desarrollador {Nombre} ha sido agregado exitosamente.")
+        return True
 
 #Modificar Desarrollador
 
@@ -105,6 +110,18 @@ def Modificar_Usuario():
     else:
         print(f"No se encontró ningún desarrollador con ID {id_modificar}")
 
+def eliminar_usuario():
+    Ver_desarrolladores()  # Mostrar La Lista De Desarrolladores
+    id_eliminar = int(input("Ingrese Id Del Desarrollador a eliminar: "))
+    desarrollador_a_eliminar = next((dev for dev in listDS if dev.id == id_eliminar), None)
+    if desarrollador_a_eliminar:
+        listDS.remove(desarrollador_a_eliminar)
+        SaveDesarrolladores(listDS)
+        print(f"Desarrollador con ID {desarrollador_a_eliminar.id} eliminado exitosamente.")
+    else:
+        print(f"No se encontró ningún desarrollador con ID {id_eliminar}")
+
+
 # El siguiente código solo se ejecutará si este script se ejecuta directamente
 if __name__ == "__main__":
         menu()
@@ -133,4 +150,4 @@ class Habilidades_Programacion():
                   return ("No se pudo verificar Por Favor Verifique Su Empleado!")
              
         #esta seria la  clasificacion de funciones sip
-        
+

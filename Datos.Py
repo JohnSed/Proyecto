@@ -20,6 +20,8 @@ while True:
         elif menu_option == 4:
             print("Saliendo del programa.")
             break
+        elif menu_option == 5:
+            Funcion.eliminar_usuario()
         else:
             print()
             print("Opcion Invalida, Por Favor Ingrese La Opcion, De Acuerdo Al Menu Brindado: ")
@@ -27,4 +29,4 @@ while True:
     except ValueError:
         print()
         print("Opción no válida. Inténtelo de nuevo.")
-    break
+        continue
