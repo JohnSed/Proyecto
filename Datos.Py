@@ -17,7 +17,7 @@ while True:
         elif menu_option == 3:
             Funcion.Modificar_Usuario()
         elif menu_option == 4:
-            Funcion.Dev_Elimiar()
+            Funcion.Dev_Eliminar()
         elif menu_option == 5:
             print("Saliendo del programa.")
             break

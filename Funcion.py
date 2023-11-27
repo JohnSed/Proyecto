@@ -136,20 +136,25 @@ class Habilidades_Programacion():
                   return ("No se pudo verificar Por Favor Verifique Su Empleado!")
              
         #esta seria la  clasificacion de funciones sip
-def Dev_Elimiar():
+def Dev_Eliminar():
     global listDS
     Ver_desarrolladores()
-    Id_Dev= input("Ingrese Numero de Cedula Del Desarrolado A Eliminar: ")
+    Id_Dev_str = input("Ingrese el número de cédula del desarrollador a eliminar: ")
 
     try:
-        Id_Dev=int(Id_Dev)
+        Id_Dev = int(Id_Dev_str)
     except ValueError:
-        print("Por Favor Ingrese El Numero De Documento Sin Espacios Ni puntos")
+        print("Por favor, ingrese el número de documento sin espacios ni puntos.")
+        return  # Salir de la función si la entrada no es un entero válido
 
-    Id_Dev = any(dev.id == id for dev in listDS)
+    # Verificar si hay algún desarrollador cuyo ID coincida con el ID de entrada
+    desarrollador_a_eliminar = next((dev for dev in listDS if dev.id == Id_Dev), None)
 
+    if desarrollador_a_eliminar:
+        listDS.remove(desarrollador_a_eliminar)
+        print(f"Desarrollador con ID {Id_Dev} eliminado exitosamente.")
+    else:
+        print(f"No se encontró un desarrollador con el ID {Id_Dev}.")
 
     SaveDesarrolladores(listDS)
-    
-
         
