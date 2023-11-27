@@ -110,31 +110,6 @@ def Modificar_Usuario():
 if __name__ == "__main__":
         menu()
 
-#Informacion Para Clasificacion En Tipo De Experiencia
-class Habilidades_Programacion():
-        
-        def __init__(self,lenguajes,Añ_Exp,Level) :
-             self.Levele= Level
-             Lenguajes_Trainer=["CSS","HTML"]
-             Lenguajes_Junior=["JavaScripa","Phyton"]+Lenguajes_Trainer
-             Lenguaje_Middle=["Java","C#","PHP"]+Lenguajes_Junior
-             Lenguaje_Senior=['Ruby', 'Go', 'Swift']+Lenguaje_Middle
-             Lenguaje_Lead=['Kotlin', 'Rust', 'TypeScript']+Lenguaje_Senior
-               #self.clasificacion = self.clasificar_habilidades(lenguajes, Lenguajes_Trainer, Lenguajes_Junior, Lenguaje_Middle, Lenguaje_Senior, Lenguaje_Lead)
-             if (hab in lenguajes for hab in Lenguaje_Lead) and Añ_Exp < 3:
-                  Level= ("Lead")
-             elif (hab in lenguajes for hab in Lenguaje_Senior) and Añ_Exp < 3:
-                  Level = ("Senior")
-             elif  (hab in lenguajes for hab in Lenguaje_Middle) and Añ_Exp < 2:
-                  Level ="Middle"
-             elif (hab in lenguajes for hab in Lenguajes_Junior) and Añ_Exp < 1:
-                  Level ="Junior"
-             elif (hab in lenguajes for hab in Lenguajes_Trainer) and Añ_Exp < 1:
-                  Level ="Trainer"
-                  
-             else:
-                  return ("No se pudo verificar Por Favor Verifique Su Empleado!")
-             
         #esta seria la  clasificacion de funciones sip
 def Dev_Eliminar():
     global listDS
@@ -157,4 +132,38 @@ def Dev_Eliminar():
         print(f"No se encontró un desarrollador con el ID {Id_Dev}.")
 
     SaveDesarrolladores(listDS)
+#Informacion Para Clasificacion En Tipo De Experiencia
+
+
+#Aun no He podido diseñar esta parte para clasificar a los desarrolladores
+
+class Habilidades_Programacion():
+        
+        def __init__(self,lenguajes,Añ_Exp,Level) :
+             self.Levele= Level
+             
+             Lenguajes_Trainer=["CSS","HTML"]
+             Lenguajes_Junior=["JavaScripa","Phyton"]+Lenguajes_Trainer
+             Lenguaje_Middle=["Java","C#","PHP"]+Lenguajes_Junior
+             Lenguaje_Senior=['Ruby', 'Go', 'Swift']+Lenguaje_Middle
+             Lenguaje_Lead=['Kotlin', 'Rust', 'TypeScript']+Lenguaje_Senior
+             self.Añ_Triner=1
+             self.Añ_Junior=1
+             self.Añ_Middel=2
+             self.Añ_Senior=3
+             self.Añ_Lead=3
+               #self.clasificacion = self.clasificar_habilidades(lenguajes, Lenguajes_Trainer, Lenguajes_Junior, Lenguaje_Middle, Lenguaje_Senior, Lenguaje_Lead)
+             if (hab in lenguajes for hab in Lenguaje_Lead) and Añ_Exp < self.Añ_Lead:
+                  Level= ("Lead")
+             elif (hab in lenguajes for hab in Lenguaje_Senior) and Añ_Exp < self.Añ_Senior:
+                  Level = ("Senior")
+             elif  (hab in lenguajes for hab in Lenguaje_Middle) and Añ_Exp < self.Añ_Middel:
+                  Level ="Middle"
+             elif (hab in lenguajes for hab in Lenguajes_Junior) and Añ_Exp < self.Añ_Junior:
+                  Level ="Junior"
+             elif (hab in lenguajes for hab in Lenguajes_Trainer) and Añ_Exp < self.Añ_Triner:
+                  Level ="Trainer"
+                  
+             else:
+                  return ("No se pudo verificar Por Favor Verifique Su Empleado!")
         
