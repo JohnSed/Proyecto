@@ -34,10 +34,9 @@ class Empleado():
         self.Nombre= Nombre
         self.Skill=self.Skill = [] if Skill is None else Skill if isinstance(Skill, list) else [Skill] # Verificar si la variable Skill es una instancia de la clase list.
         self.añ_exp=añ_exp
-
+   
 #Lista para almacenar los desarrolladores en memoria "Json"
 listDS = JsonDesarrolladores()
-
 
 #Menu
 def  menu():
@@ -105,12 +104,6 @@ def Modificar_Usuario():
         print(f"Desarrollador con ID {desarrollador_a_modificar.id} modificado exitosamente.")
     else:
         print(f"No se encontró ningún desarrollador con ID {id_modificar}")
-
-# El siguiente código solo se ejecutará si este script se ejecuta directamente
-if __name__ == "__main__":
-        menu()
-
-        #esta seria la  clasificacion de funciones sip
 def Dev_Eliminar():
     global listDS
     Ver_desarrolladores()
@@ -134,36 +127,45 @@ def Dev_Eliminar():
     SaveDesarrolladores(listDS)
 #Informacion Para Clasificacion En Tipo De Experiencia
 
+# El siguiente código solo se ejecutará si este script se ejecuta directamente
+if __name__ == "__main__":
+        menu()
+
+        #esta seria la  clasificacion de funciones sip
+
+
 
 #Aun no He podido diseñar esta parte para clasificar a los desarrolladores
 
-class Habilidades_Programacion():
         
-        def __init__(self,lenguajes,Añ_Exp,Level) :
-             self.Levele= Level
-             
-             Lenguajes_Trainer=["CSS","HTML"]
-             Lenguajes_Junior=["JavaScripa","Phyton"]+Lenguajes_Trainer
-             Lenguaje_Middle=["Java","C#","PHP"]+Lenguajes_Junior
-             Lenguaje_Senior=['Ruby', 'Go', 'Swift']+Lenguaje_Middle
-             Lenguaje_Lead=['Kotlin', 'Rust', 'TypeScript']+Lenguaje_Senior
-             self.Añ_Triner=1
-             self.Añ_Junior=1
-             self.Añ_Middel=2
-             self.Añ_Senior=3
-             self.Añ_Lead=3
-               #self.clasificacion = self.clasificar_habilidades(lenguajes, Lenguajes_Trainer, Lenguajes_Junior, Lenguaje_Middle, Lenguaje_Senior, Lenguaje_Lead)
-             if (hab in lenguajes for hab in Lenguaje_Lead) and Añ_Exp < self.Añ_Lead:
-                  Level= ("Lead")
-             elif (hab in lenguajes for hab in Lenguaje_Senior) and Añ_Exp < self.Añ_Senior:
-                  Level = ("Senior")
-             elif  (hab in lenguajes for hab in Lenguaje_Middle) and Añ_Exp < self.Añ_Middel:
-                  Level ="Middle"
-             elif (hab in lenguajes for hab in Lenguajes_Junior) and Añ_Exp < self.Añ_Junior:
-                  Level ="Junior"
-             elif (hab in lenguajes for hab in Lenguajes_Trainer) and Añ_Exp < self.Añ_Triner:
-                  Level ="Trainer"
-                  
-             else:
-                  return ("No se pudo verificar Por Favor Verifique Su Empleado!")
+class Habilidades_Programacion:
+    def __init__(self, lenguajes, Añ_Exp, Level):
+        self.Level = Level
+        self.lenguajes = lenguajes
+        self.Añ_Exp = Añ_Exp
+        self.Lenguajes_Trainer = ["CSS", "HTML"]
+        self.Lenguajes_Junior = ["JavaScript", "Python"] + self.Lenguajes_Trainer
+        self.Lenguaje_Middle = ["Java", "C#", "PHP"] + self.Lenguajes_Junior
+        self.Lenguaje_Senior = ['Ruby', 'Go', 'Swift'] + self.Lenguaje_Middle
+        self.Lenguaje_Lead = ['Kotlin', 'Rust', 'TypeScript'] + self.Lenguaje_Senior
+
+        self.Añ_Triner = 1
+        self.Añ_Junior = 1
+        self.Añ_Middel = 2
+        self.Añ_Senior = 3
+        self.Añ_Lead = 3
+
+    def Level_Dep(self):
+        if any(hab in self.lenguajes for hab in self.Lenguaje_Lead) and self.Añ_Exp < self.Añ_Lead:
+            self.Level = "Lead"
+        elif any(hab in self.lenguajes for hab in self.Lenguaje_Senior) and self.Añ_Exp < self.Añ_Senior:
+            self.Level = "Senior"
+        elif any(hab in self.lenguajes for hab in self.Lenguaje_Middle) and self.Añ_Exp < self.Añ_Middel:
+            self.Level = "Middle"
+        elif any(hab in self.lenguajes for hab in self.Lenguajes_Junior) and self.Añ_Exp < self.Añ_Junior:
+            self.Level = "Junior"
+        elif any(hab in self.lenguajes for hab in self.Lenguajes_Trainer) and self.Añ_Exp < self.Añ_Triner:
+            self.Level = "Trainer"
+        else:
+            return "No se pudo verificar Por Favor Verifique Su Empleado!"
         

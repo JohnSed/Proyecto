@@ -7,8 +7,6 @@ while True:
     try: 
         Funcion.menu()
         menu_option = int(input("Seleccione una opción: "))
-       
-
         if menu_option == 1:
             Funcion.Nuevo_Usuario()
         
