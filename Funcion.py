@@ -44,7 +44,8 @@ def  menu():
     print("1. Agregar Desarrollador")
     print("2. Mostrar Desarrolladores")
     print("3. Modificar Desarrollador")
-    print("4. Salir")
+    print("4. Eliminar Desarrrolador: ")
+    print("5. Salir")
     
     
 #Imprimir Json
@@ -112,25 +113,43 @@ if __name__ == "__main__":
 #Informacion Para Clasificacion En Tipo De Experiencia
 class Habilidades_Programacion():
         
-        def __init__(self,lenguajes,Añ_Exp) :
+        def __init__(self,lenguajes,Añ_Exp,Level) :
+             self.Levele= Level
              Lenguajes_Trainer=["CSS","HTML"]
              Lenguajes_Junior=["JavaScripa","Phyton"]+Lenguajes_Trainer
              Lenguaje_Middle=["Java","C#","PHP"]+Lenguajes_Junior
              Lenguaje_Senior=['Ruby', 'Go', 'Swift']+Lenguaje_Middle
              Lenguaje_Lead=['Kotlin', 'Rust', 'TypeScript']+Lenguaje_Senior
                #self.clasificacion = self.clasificar_habilidades(lenguajes, Lenguajes_Trainer, Lenguajes_Junior, Lenguaje_Middle, Lenguaje_Senior, Lenguaje_Lead)
-             if (hab in lenguajes for hab in Lenguaje_Lead):
-                  return ("Trainer")
-             elif (hab in lenguajes for hab in Lenguaje_Senior):
-                  return ("Senior")
-             elif  (hab in lenguajes for hab in Lenguaje_Middle):
-                  return ("Middle")
-             elif (hab in lenguajes for hab in Lenguajes_Junior):
-                  return ("Junior")
-             elif (hab in lenguajes for hab in Lenguajes_Trainer):
-                  return("Trainer")
+             if (hab in lenguajes for hab in Lenguaje_Lead) and Añ_Exp < 3:
+                  Level= ("Lead")
+             elif (hab in lenguajes for hab in Lenguaje_Senior) and Añ_Exp < 3:
+                  Level = ("Senior")
+             elif  (hab in lenguajes for hab in Lenguaje_Middle) and Añ_Exp < 2:
+                  Level ="Middle"
+             elif (hab in lenguajes for hab in Lenguajes_Junior) and Añ_Exp < 1:
+                  Level ="Junior"
+             elif (hab in lenguajes for hab in Lenguajes_Trainer) and Añ_Exp < 1:
+                  Level ="Trainer"
+                  
              else:
                   return ("No se pudo verificar Por Favor Verifique Su Empleado!")
              
         #esta seria la  clasificacion de funciones sip
+def Dev_Elimiar():
+    global listDS
+    Ver_desarrolladores()
+    Id_Dev= input("Ingrese Numero de Cedula Del Desarrolado A Eliminar: ")
+
+    try:
+        Id_Dev=int(Id_Dev)
+    except ValueError:
+        print("Por Favor Ingrese El Numero De Documento Sin Espacios Ni puntos")
+
+    Id_Dev = any(dev.id == id for dev in listDS)
+
+
+    SaveDesarrolladores(listDS)
+    
+
         
