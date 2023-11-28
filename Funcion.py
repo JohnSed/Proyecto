@@ -70,14 +70,37 @@ class Habilidades_Programacion:
         else:
             print("No se pudo Identificar Lenguaje De Acuerdo A La Base De Datos. Por favor, Verificar o Actualizar La Lista De Habilidades Predeterminadas.")
             return None
-    def modificar_lenguajes(self, nuevos_lenguajes):
-        self.lenguajes = nuevos_lenguajes
-        self.Lenguajes_Trainer = nuevos_lenguajes  
-        self.Lenguajes_Junior = nuevos_lenguajes  
-        self.Lenguaje_Middle = nuevos_lenguajes  
-        self.Lenguaje_Senior = nuevos_lenguajes  
-        self.Lenguaje_Lead = nuevos_lenguajes   
-         
+    def modificar_lenguajes(self):
+        self=self
+        Clasificacion=input("Por Favor Escriba El Nivel Que Desea Modifitcar (Trainer, Junior, Middel, Senior, Lead): ")
+        Clasificacion=Clasificacion.upper()
+
+        if Clasificacion == "TRAINER":
+            
+            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
+            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
+            Habilidades_Programacion.Lenguajes_Trainer = nuevos_lenguajes
+
+        elif Clasificacion == "JUNIOR":
+            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
+            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
+            Habilidades_Programacion.Lenguajes_Junior = nuevos_lenguajes  
+
+        elif Clasificacion == "MIDDLE":
+            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
+            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
+            Habilidades_Programacion.Lenguaje_Middle = nuevos_lenguajes  
+
+        elif Clasificacion == "SENIOR":
+            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
+            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
+            Habilidades_Programacion.Lenguaje_Senior = nuevos_lenguajes 
+
+        elif Clasificacion == "LEAD":
+            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
+            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
+            self.Lenguaje_Lead = nuevos_lenguajes
+        
 #Lista para almacenar los desarrolladores en memoria "Json"
 listDS = JsonDesarrolladores()
 
@@ -112,6 +135,7 @@ def Nuevo_Usuario():
         Nombre = input("Ingrese Nombre Del Empleado: ")
         Skill = input("Ingrese Habilidades (Separadas En Coma): ")
         Skill=Skill.upper()
+        Skill = Skill.split(',')
         Añ_Expe = float(input("Ingrese Su Experiencia En Años: "))
 
         # Crear la instancia de Empleado después de ingresar la información
@@ -182,3 +206,31 @@ def Dev_Eliminar():
 if __name__ == "__main__":
         menu()
 
+
+
+while True:
+    try: 
+        menu()
+        menu_option = int(input("Seleccione una opción: "))
+        if menu_option == 1:
+            Nuevo_Usuario()
+        
+        elif menu_option == 2:
+            Ver_desarrolladores()
+        elif menu_option == 3:
+            Modificar_Usuario()
+        elif menu_option == 4:
+            Dev_Eliminar()
+        elif menu_option == 5:
+            Habilidades_Programacion.modificar_lenguajes()
+        elif menu_option == 6:
+            print("Saliendo del programa.")
+            break
+        else:
+            print()
+            print("Opcion Invalida, Por Favor Ingrese La Opcion, De Acuerdo Al Menu Brindado: ")
+          
+    except ValueError:
+        print()
+        print("Valor no válida. Inténtelo de nuevo.")
+    

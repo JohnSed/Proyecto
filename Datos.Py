@@ -17,8 +17,10 @@ while True:
         elif menu_option == 4:
             Funcion.Dev_Eliminar()
         elif menu_option == 5:
+            Funcion.Habilidades_Programacion.modificar_lenguajes()
+        elif menu_option == 6:
             print("Saliendo del programa.")
-        
+            break
         else:
             print()
             print("Opcion Invalida, Por Favor Ingrese La Opcion, De Acuerdo Al Menu Brindado: ")
