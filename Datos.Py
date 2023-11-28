@@ -18,7 +18,7 @@ while True:
             Funcion.Dev_Eliminar()
         elif menu_option == 5:
             print("Saliendo del programa.")
-            break
+        
         else:
             print()
             print("Opcion Invalida, Por Favor Ingrese La Opcion, De Acuerdo Al Menu Brindado: ")
@@ -26,4 +26,4 @@ while True:
     except ValueError:
         print()
         print("Valor no válida. Inténtelo de nuevo.")
-    break
+    

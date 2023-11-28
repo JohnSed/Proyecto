@@ -5,36 +5,79 @@ json_Developers= "DataBaseDevelopers.json"
 #Abrir Archivo Json
 def JsonDesarrolladores():
     try:
-        with open(json_Developers, "r",encoding="utf-8") as archivo:
+        with open(json_Developers, "r", encoding="utf-8") as archivo:
             contenido = archivo.read()
             if contenido:
                 Empleado_Desarrollador = json.loads(contenido)
-                return [Empleado(**Dev) for Dev in Empleado_Desarrollador]
+                return [Empleado(Nombre=dev['Nombre'], Skill=dev['Skill'], añ_exp=dev['añ_exp'], id=dev['id'], Level=dev.get('Level', None)) for dev in Empleado_Desarrollador]
             else:
-                return []#Devuleve Lista Vacia
-    except FileNotFoundError:#Excepcion Para que informe si el archivo Json No existe 
-        return []#Devuleve Lista Vacia
-    except json.decoder.JSONDecodeError:# Excepcion Si EL Json esta mal definido o sus cmapos esta vacio
-        return []#Devuleve Lista Vacia
-    
+                return []  # Devuelve Lista Vacia
+    except FileNotFoundError:
+        return []  # Devuelve Lista Vacia
+    except json.decoder.JSONDecodeError:
+        return []  # Devuelve Lista Vacia
+
 #Guardar Informacion En Json
 def SaveDesarrolladores( Desarrollador):
     with open(json_Developers, "w",encoding="utf-8") as archivo1:
-        data = [{"id": dev.id, "Nombre": dev.Nombre, "Skill": dev.Skill, "añ_exp": dev.añ_exp} for dev in Desarrollador]
+        data = [{"id": dev.id, "Nombre": dev.Nombre, "Skill": dev.Skill, "añ_exp": dev.añ_exp,"Level":dev.Level} for dev in Desarrollador]
         json.dump(data, archivo1,ensure_ascii=False)
 
 #Informacion  Empleado.
 class Empleado():
-    def __init__(self,Nombre,Skill,añ_exp, id=None) :
+    def __init__(self,Nombre,Skill,añ_exp,Level, id=None) :
         #En Caso De Que El Id No Se Encuentre Registrado Lo Creamos En Else.
         if id is not None:
             self.id=id
         else:
             self.id=id
         self.Nombre= Nombre
-        self.Skill=self.Skill = [] if Skill is None else Skill if isinstance(Skill, list) else [Skill] # Verificar si la variable Skill es una instancia de la clase list.
+        self.Skill= [] if Skill is None else Skill if isinstance(Skill, list) else [Skill] # Verificar si la variable Skill es una instancia de la clase list.
         self.añ_exp=añ_exp
-   
+        self.Level=Level
+
+# clasificar a los desarrolladores
+
+        
+class Habilidades_Programacion:
+    def __init__(self, lenguajes, Añ_Exp, Level):
+        self.Level = Level
+        self.lenguajes = lenguajes
+        self.Añ_Exp = Añ_Exp
+        self.Lenguajes_Trainer = ["CSS","HTML"]
+        self.Lenguajes_Junior = ["JavaScript","Python"] + self.Lenguajes_Trainer
+        self.Lenguaje_Middle = ["Java","C#","PHP"] + self.Lenguajes_Junior
+        self.Lenguaje_Senior = ['Ruby','Go','Swift'] + self.Lenguaje_Middle
+        self.Lenguaje_Lead = ['Kotlin','Rust','TypeScript'] + self.Lenguaje_Senior
+
+        self.Añ_Triner = 1
+        self.Añ_Junior = 1
+        self.Añ_Middel = 2
+        self.Añ_Senior = 3
+        self.Añ_Lead = 4
+
+    def Level_Dep(self, Empleado):
+        if any(hab in Empleado.Skill for hab in self.Lenguaje_Lead) and Empleado.añ_exp >= self.Añ_Lead:
+            return "Lead"
+        elif any(hab in Empleado.Skill for hab in self.Lenguaje_Senior) and Empleado.añ_exp  >= self.Añ_Senior:
+            return "Senior"
+        elif any(hab in Empleado.Skill for hab in self.Lenguaje_Middle) and Empleado.añ_exp >=  self.Añ_Middel:
+            return "Middle"
+        elif any(hab in Empleado.Skill for hab in self.Lenguajes_Junior) and Empleado.añ_exp >=  self.Añ_Junior:
+            return "Junior"
+        elif any(hab in Empleado.Skill for hab in self.Lenguajes_Trainer) and Empleado.añ_exp <  self.Añ_Triner:
+            return "Trainer"
+        else:
+            print("No se pudo Identificar Lenguaje De Acuerdo A La Base De Datos. Por favor, Verificar o Actualizar La Lista De Habilidades Predeterminadas.")
+            return None
+    def modificar_lenguajes(self, nuevos_lenguajes):
+        self.lenguajes = nuevos_lenguajes
+        self.Lenguajes_Trainer = nuevos_lenguajes  
+        self.Lenguajes_Junior = nuevos_lenguajes  
+        self.Lenguaje_Middle = nuevos_lenguajes  
+        self.Lenguaje_Senior = nuevos_lenguajes  
+        self.Lenguaje_Lead = nuevos_lenguajes   
+         
 #Lista para almacenar los desarrolladores en memoria "Json"
 listDS = JsonDesarrolladores()
 
@@ -44,7 +87,8 @@ def  menu():
     print("2. Mostrar Desarrolladores")
     print("3. Modificar Desarrollador")
     print("4. Eliminar Desarrrolador: ")
-    print("5. Salir")
+    print("5. Modificar Habilidades Por Nivel")
+    print("6. Salir")
     
     
 #Imprimir Json
@@ -52,7 +96,7 @@ def Ver_desarrolladores():
     print("\nLista de Desarrolladores:")
     for Desarrolladores in listDS:
         print(f"ID: {Desarrolladores.id}, Nombre: {Desarrolladores.Nombre}, Habilidades: {Desarrolladores.Skill}, "
-              f"Años de Experiencia: {Desarrolladores.añ_exp}")
+              f"Años de Experiencia: {Desarrolladores.añ_exp}",f"Nivel:{Desarrolladores.Level}")
     print()
 
 #Agregar Desarrollador
@@ -67,10 +111,14 @@ def Nuevo_Usuario():
         # Si el ID no existe, continuar con la entrada de otros datos
         Nombre = input("Ingrese Nombre Del Empleado: ")
         Skill = input("Ingrese Habilidades (Separadas En Coma): ")
+        Skill=Skill.upper()
         Añ_Expe = float(input("Ingrese Su Experiencia En Años: "))
 
         # Crear la instancia de Empleado después de ingresar la información
-        Desarrollador = Empleado(Nombre, Skill, Añ_Expe, id)
+        
+        Desarrollador = Empleado(Nombre, Skill, Añ_Expe, None, id)  # Asegúrate de pasar el id correctamente
+        Desarrollador.Level = Habilidades_Programacion(Desarrollador.Skill, Desarrollador.añ_exp, None).Level_Dep(Desarrollador)
+
 
         listDS.append(Desarrollador)
         SaveDesarrolladores(listDS)
@@ -80,6 +128,7 @@ def Nuevo_Usuario():
 
 def Modificar_Usuario():
     Ver_desarrolladores()  # Mostrar La Lista De Desarrolladores
+
     id_modificar = int(input("Ingrese Id Del Desarrollador a Modificar: "))
     # Buscar el desarrollador por su ID
     desarrollador_a_modificar = next((dev for dev in listDS if dev.id == id_modificar), None)
@@ -93,13 +142,15 @@ def Modificar_Usuario():
         # Habilidades
         print(f"Habilidades actuales: {desarrollador_a_modificar.Skill}")
         nuevo_skill = input("Ingrese las nuevas habilidades (o presione Enter para dejarlas sin cambios): ")
+        nuevo_skill=nuevo_skill.upper()
         if nuevo_skill:
             desarrollador_a_modificar.Skill.extend(nuevo_skill.split(','))  # Extender la lista de habilidades
         # Años Experiencia
         print(f"Años de experiencia actuales: {desarrollador_a_modificar.añ_exp}")
         nuevo_añ_exp = input("Ingrese los nuevos años de experiencia (o presione Enter para dejarlos sin cambios): ")
         desarrollador_a_modificar.añ_exp = float(nuevo_añ_exp) if nuevo_añ_exp else desarrollador_a_modificar.añ_exp
-
+        # Lógica de reclasificación
+        desarrollador_a_modificar.Level = Habilidades_Programacion(desarrollador_a_modificar.Skill, desarrollador_a_modificar.añ_exp, None).Level_Dep(desarrollador_a_modificar)
         SaveDesarrolladores(listDS)
         print(f"Desarrollador con ID {desarrollador_a_modificar.id} modificado exitosamente.")
     else:
@@ -131,41 +182,3 @@ def Dev_Eliminar():
 if __name__ == "__main__":
         menu()
 
-        #esta seria la  clasificacion de funciones sip
-
-
-
-#Aun no He podido diseñar esta parte para clasificar a los desarrolladores
-
-        
-class Habilidades_Programacion:
-    def __init__(self, lenguajes, Añ_Exp, Level):
-        self.Level = Level
-        self.lenguajes = lenguajes
-        self.Añ_Exp = Añ_Exp
-        self.Lenguajes_Trainer = ["CSS", "HTML"]
-        self.Lenguajes_Junior = ["JavaScript", "Python"] + self.Lenguajes_Trainer
-        self.Lenguaje_Middle = ["Java", "C#", "PHP"] + self.Lenguajes_Junior
-        self.Lenguaje_Senior = ['Ruby', 'Go', 'Swift'] + self.Lenguaje_Middle
-        self.Lenguaje_Lead = ['Kotlin', 'Rust', 'TypeScript'] + self.Lenguaje_Senior
-
-        self.Añ_Triner = 1
-        self.Añ_Junior = 1
-        self.Añ_Middel = 2
-        self.Añ_Senior = 3
-        self.Añ_Lead = 3
-
-    def Level_Dep(self):
-        if any(hab in self.lenguajes for hab in self.Lenguaje_Lead) and self.Añ_Exp < self.Añ_Lead:
-            self.Level = "Lead"
-        elif any(hab in self.lenguajes for hab in self.Lenguaje_Senior) and self.Añ_Exp < self.Añ_Senior:
-            self.Level = "Senior"
-        elif any(hab in self.lenguajes for hab in self.Lenguaje_Middle) and self.Añ_Exp < self.Añ_Middel:
-            self.Level = "Middle"
-        elif any(hab in self.lenguajes for hab in self.Lenguajes_Junior) and self.Añ_Exp < self.Añ_Junior:
-            self.Level = "Junior"
-        elif any(hab in self.lenguajes for hab in self.Lenguajes_Trainer) and self.Añ_Exp < self.Añ_Triner:
-            self.Level = "Trainer"
-        else:
-            return "No se pudo verificar Por Favor Verifique Su Empleado!"
-        
