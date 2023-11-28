@@ -70,36 +70,37 @@ class Habilidades_Programacion:
         else:
             print("No se pudo Identificar Lenguaje De Acuerdo A La Base De Datos. Por favor, Verificar o Actualizar La Lista De Habilidades Predeterminadas.")
             return None
-    def modificar_lenguajes(self):
-        self=self
-        Clasificacion=input("Por Favor Escriba El Nivel Que Desea Modifitcar (Trainer, Junior, Middel, Senior, Lead): ")
-        Clasificacion=Clasificacion.upper()
+    def modificar_lenguajes():
+                                
+       Clasificacion=input("Por Favor Escriba El Nivel Que Desea Modifitcar (Trainer, Junior, Middel, Senior, Lead): ")
+       Clasificacion=Clasificacion.upper()
 
-        if Clasificacion == "TRAINER":
+       if Clasificacion == "TRAINER":
             
             nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
             nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
             Habilidades_Programacion.Lenguajes_Trainer = nuevos_lenguajes
+            print(nuevos_lenguajes)
 
-        elif Clasificacion == "JUNIOR":
+       elif Clasificacion == "JUNIOR":
             nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
             nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
             Habilidades_Programacion.Lenguajes_Junior = nuevos_lenguajes  
 
-        elif Clasificacion == "MIDDLE":
+       elif Clasificacion == "MIDDLE":
             nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
             nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
             Habilidades_Programacion.Lenguaje_Middle = nuevos_lenguajes  
 
-        elif Clasificacion == "SENIOR":
+       elif Clasificacion == "SENIOR":
             nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
             nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
             Habilidades_Programacion.Lenguaje_Senior = nuevos_lenguajes 
 
-        elif Clasificacion == "LEAD":
+       elif Clasificacion == "LEAD":
             nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
             nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
-            self.Lenguaje_Lead = nuevos_lenguajes
+            Habilidades_Programacion.Lenguaje_Lead = nuevos_lenguajes
         
 #Lista para almacenar los desarrolladores en memoria "Json"
 listDS = JsonDesarrolladores()
