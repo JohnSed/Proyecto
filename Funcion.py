@@ -45,62 +45,33 @@ class Habilidades_Programacion:
         self.lenguajes = lenguajes
         self.Añ_Exp = Añ_Exp
         self.Lenguajes_Trainer = ["CSS","HTML"]
-        self.Lenguajes_Junior = ["JavaScript","Python"] + self.Lenguajes_Trainer
-        self.Lenguaje_Middle = ["Java","C#","PHP"] + self.Lenguajes_Junior
-        self.Lenguaje_Senior = ['Ruby','Go','Swift'] + self.Lenguaje_Middle
-        self.Lenguaje_Lead = ['Kotlin','Rust','TypeScript'] + self.Lenguaje_Senior
+        self.Lenguajes_Junior = ["JAVASCRIPT","PYTHON"] 
+        self.Lenguaje_Middle = ["JAVA","C#","PHP"] 
+        self.Lenguaje_Senior = ['RUBY','GO','SWIFT'] 
+        self.Lenguaje_Lead = ['KOTLIN','RUST','TYPESCRIPT'] 
 
-        self.Añ_Triner = 1
+
         self.Añ_Junior = 1
         self.Añ_Middel = 2
         self.Añ_Senior = 3
         self.Añ_Lead = 4
 
     def Level_Dep(self, Empleado):
-        if any(hab in Empleado.Skill for hab in self.Lenguaje_Lead) and Empleado.añ_exp >= self.Añ_Lead:
+
+        if any(hab in Empleado.Skill for hab in self.Lenguaje_Lead) and Empleado.añ_exp >= self.Añ_Lead and Empleado.añ_exp <= self.Añ_Lead+Empleado.añ_exp:
             return "Lead"
-        elif any(hab in Empleado.Skill for hab in self.Lenguaje_Senior) and Empleado.añ_exp  >= self.Añ_Senior:
+        elif any(hab in Empleado.Skill for hab in self.Lenguaje_Senior) and Empleado.añ_exp  >= self.Añ_Senior and Empleado.añ_exp <= self.Añ_Senior+Empleado.añ_exp:
             return "Senior"
-        elif any(hab in Empleado.Skill for hab in self.Lenguaje_Middle) and Empleado.añ_exp >=  self.Añ_Middel:
+        elif any(hab in Empleado.Skill for hab in self.Lenguaje_Middle) and Empleado.añ_exp >=  self.Añ_Middel and Empleado.añ_exp <= self.Añ_Middel+Empleado.añ_exp:
             return "Middle"
-        elif any(hab in Empleado.Skill for hab in self.Lenguajes_Junior) and Empleado.añ_exp >=  self.Añ_Junior:
+        elif any(hab in Empleado.Skill for hab in self.Lenguajes_Junior) and Empleado.añ_exp >=  self.Añ_Junior and Empleado.añ_exp <= self.Añ_Junior+Empleado.añ_exp:
             return "Junior"
-        elif any(hab in Empleado.Skill for hab in self.Lenguajes_Trainer) and Empleado.añ_exp <  self.Añ_Triner:
+        elif all(hab in Empleado.Skill for hab in self.Lenguajes_Trainer) :
             return "Trainer"
+            
         else:
             print("No se pudo Identificar Lenguaje De Acuerdo A La Base De Datos. Por favor, Verificar o Actualizar La Lista De Habilidades Predeterminadas.")
             return None
-    def modificar_lenguajes():
-                                
-       Clasificacion=input("Por Favor Escriba El Nivel Que Desea Modifitcar (Trainer, Junior, Middel, Senior, Lead): ")
-       Clasificacion=Clasificacion.upper()
-
-       if Clasificacion == "TRAINER":
-            
-            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
-            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
-            Habilidades_Programacion.Lenguajes_Trainer = nuevos_lenguajes
-            print(nuevos_lenguajes)
-
-       elif Clasificacion == "JUNIOR":
-            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
-            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
-            Habilidades_Programacion.Lenguajes_Junior = nuevos_lenguajes  
-
-       elif Clasificacion == "MIDDLE":
-            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
-            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
-            Habilidades_Programacion.Lenguaje_Middle = nuevos_lenguajes  
-
-       elif Clasificacion == "SENIOR":
-            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
-            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
-            Habilidades_Programacion.Lenguaje_Senior = nuevos_lenguajes 
-
-       elif Clasificacion == "LEAD":
-            nuevos_lenguajes=input(f"Ingrese Los Lenguajes Que Desea Establecer Para Este Nivel: {Clasificacion}, (Separados En Coma): ")
-            nuevos_lenguajes=nuevos_lenguajes.upper().split(",")
-            Habilidades_Programacion.Lenguaje_Lead = nuevos_lenguajes
         
 #Lista para almacenar los desarrolladores en memoria "Json"
 listDS = JsonDesarrolladores()
@@ -111,7 +82,7 @@ def  menu():
     print("2. Mostrar Desarrolladores")
     print("3. Modificar Desarrollador")
     print("4. Eliminar Desarrrolador: ")
-    print("5. Modificar Habilidades Por Nivel")
+    print("5. Busqueda Desarrollador Por Documento.")
     print("6. Salir")
     
     
@@ -164,19 +135,23 @@ def Modificar_Usuario():
         print(f"Nombre actual: {desarrollador_a_modificar.Nombre}")
         nuevo_nombre = input("Ingrese el nuevo nombre (o presione Enter para dejarlo sin cambios): ")
         desarrollador_a_modificar.Nombre = nuevo_nombre if nuevo_nombre else desarrollador_a_modificar.Nombre
+
         # Habilidades
         print(f"Habilidades actuales: {desarrollador_a_modificar.Skill}")
         nuevo_skill = input("Ingrese las nuevas habilidades (o presione Enter para dejarlas sin cambios): ")
         nuevo_skill=nuevo_skill.upper()
         if nuevo_skill:
             desarrollador_a_modificar.Skill.extend(nuevo_skill.split(','))  # Extender la lista de habilidades
+
         # Años Experiencia
         print(f"Años de experiencia actuales: {desarrollador_a_modificar.añ_exp}")
         nuevo_añ_exp = input("Ingrese los nuevos años de experiencia (o presione Enter para dejarlos sin cambios): ")
-        desarrollador_a_modificar.añ_exp = float(nuevo_añ_exp) if nuevo_añ_exp else desarrollador_a_modificar.añ_exp
+        desarrollador_a_modificar.añ_exp += float(nuevo_añ_exp) if nuevo_añ_exp else 0.0
+
         # Lógica de reclasificación
         desarrollador_a_modificar.Level = Habilidades_Programacion(desarrollador_a_modificar.Skill, desarrollador_a_modificar.añ_exp, None).Level_Dep(desarrollador_a_modificar)
         SaveDesarrolladores(listDS)
+
         print(f"Desarrollador con ID {desarrollador_a_modificar.id} modificado exitosamente.")
     else:
         print(f"No se encontró ningún desarrollador con ID {id_modificar}")
@@ -201,37 +176,46 @@ def Dev_Eliminar():
         print(f"No se encontró un desarrollador con el ID {Id_Dev}.")
 
     SaveDesarrolladores(listDS)
-#Informacion Para Clasificacion En Tipo De Experiencia
+
+def Busqueda_Por_Desarrallador():
+    id_buscar = int(input("Ingrese Id Del Desarrollador a Verificar: "))
+    # Buscar el desarrollador por su ID
+    desarrollador_buscado = next((dev for dev in listDS if dev.id == id_buscar), None)
+
+    if desarrollador_buscado is not None:
+        print(f"Cedula: {desarrollador_buscado.id} - Nombre: {desarrollador_buscado.Nombre} - Habilidades: {desarrollador_buscado.Skill} - Años Experiencia: {desarrollador_buscado.añ_exp} - Nivel: {desarrollador_buscado.Level}")
+        
+ 
+    else:
+        print("Desarrollador No Encontrado.")
+
+       # Crear una instancia de Habilidades_Programacion dentro de la función
+    
+    habilidades_programacion = Habilidades_Programacion(None, None, None)  # Ajusta los parámetros según sea necesario  
+    # Acceder a la lista Lenguajes_Junior de la instancia
+    if desarrollador_buscado.Level =="Trainer":
+
+        habilidades_faltantes = list(set(habilidades_programacion.Lenguajes_Junior) - set(desarrollador_buscado.Skill))
+        Años_Exper=habilidades_programacion.Añ_Junior
+        print(f"Habilidades Faltantes Para Ascender A Junior: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+
+    if desarrollador_buscado.Level =="Junior":
+        habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Middle) - set(desarrollador_buscado.Skill))
+        Años_Exper=habilidades_programacion.Añ_Middel
+        print(f"Habilidades Faltantes Para Ascender A Middle: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+
+    if desarrollador_buscado.Level =="Middle":
+        habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Senior) - set(desarrollador_buscado.Skill))
+        Años_Exper=habilidades_programacion.Añ_Senior
+        print(f"Habilidades Faltantes Para Ascender A Senior: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+
+    if desarrollador_buscado.Level =="Senior":
+        habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Lead) - set(desarrollador_buscado.Skill))
+        Años_Exper=habilidades_programacion.Añ_Senior
+        print(f"Habilidades Faltantes Para Ascender A Lead: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+
+
 
 # El siguiente código solo se ejecutará si este script se ejecuta directamente
 if __name__ == "__main__":
         menu()
-
-
-
-while True:
-    try: 
-        menu()
-        menu_option = int(input("Seleccione una opción: "))
-        if menu_option == 1:
-            Nuevo_Usuario()
-        
-        elif menu_option == 2:
-            Ver_desarrolladores()
-        elif menu_option == 3:
-            Modificar_Usuario()
-        elif menu_option == 4:
-            Dev_Eliminar()
-        elif menu_option == 5:
-            Habilidades_Programacion.modificar_lenguajes()
-        elif menu_option == 6:
-            print("Saliendo del programa.")
-            break
-        else:
-            print()
-            print("Opcion Invalida, Por Favor Ingrese La Opcion, De Acuerdo Al Menu Brindado: ")
-          
-    except ValueError:
-        print()
-        print("Valor no válida. Inténtelo de nuevo.")
-    

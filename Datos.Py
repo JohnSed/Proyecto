@@ -17,7 +17,7 @@ while True:
         elif menu_option == 4:
             Funcion.Dev_Eliminar()
         elif menu_option == 5:
-            Funcion.Habilidades_Programacion.modificar_lenguajes()
+            Funcion.Busqueda_Por_Desarrallador()
         elif menu_option == 6:
             print("Saliendo del programa.")
             break
