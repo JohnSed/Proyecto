@@ -197,22 +197,22 @@ def Busqueda_Por_Desarrallador():
 
         habilidades_faltantes = list(set(habilidades_programacion.Lenguajes_Junior) - set(desarrollador_buscado.Skill))
         Años_Exper=habilidades_programacion.Añ_Junior
-        print(f"Habilidades Faltantes Para Ascender A Junior: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+        print(f" Pare Ascender a Junior Debe Manejar Alguno De Los Siguiente Lenguajes: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
 
     if desarrollador_buscado.Level =="Junior":
         habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Middle) - set(desarrollador_buscado.Skill))
         Años_Exper=habilidades_programacion.Añ_Middel
-        print(f"Habilidades Faltantes Para Ascender A Middle: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+        print(f" Pare Ascender a Middle Debe Manejar Alguno De Los Siguiente Lenguajes: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
 
     if desarrollador_buscado.Level =="Middle":
         habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Senior) - set(desarrollador_buscado.Skill))
         Años_Exper=habilidades_programacion.Añ_Senior
-        print(f"Habilidades Faltantes Para Ascender A Senior: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+        print(f"Pare Ascender a Senior Debe Manejar Alguno De Los Siguiente Lenguajes:: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
 
     if desarrollador_buscado.Level =="Senior":
         habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Lead) - set(desarrollador_buscado.Skill))
         Años_Exper=habilidades_programacion.Añ_Senior
-        print(f"Habilidades Faltantes Para Ascender A Lead: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+        print(f"Pare Ascender a Lead Debe Manejar Alguno De Los Siguiente Lenguajes:: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
 
 
 
