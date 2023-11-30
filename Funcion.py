@@ -230,10 +230,10 @@ def Busqueda_Por_Desarrallador():
 def ascender_desarrollador(desarrollador, nivel_deseado):
      # Crear una instancia de Habilidades_Programacion dentro de la función
      habilidades_programacion = Habilidades_Programacion(None, None, None)
-     habilidades_nivel = habilidades_programacion.GetLenguajesPorNivel(nivel_deseado);
+     habilidades_nivel = habilidades_programacion.GetLenguajesPorNivel(nivel_deseado)
      habilidades_faltantes = list(set(habilidades_nivel) - set(desarrollador.Skill))
      Años_Exper= Anosexp[nivel_deseado].value #este value llama los valores de los niveles (1,2,3,4,5,etc)
-     print(f"Habilidades Faltantes Para Ascender A {nivel_deseado}: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+     print(f"Las habilidades Faltantes Para Ascender A {nivel_deseado}: {habilidades_faltantes} y  La Cantidad De  Años De Experiecnia: {Años_Exper}")
      print(f"\n\n Desea ascender al desarrollador {desarrollador.Nombre} a {nivel_deseado}?\n 1: Si \n Cualquier otra tecla: No \n")
      opcion = int(input("Ingrese la opcion deseada: "))
      if opcion == 1:
