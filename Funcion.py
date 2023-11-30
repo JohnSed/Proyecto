@@ -1,6 +1,14 @@
 import json
+from enum import Enum
+class Anosexp(Enum):
+    Trainee = 0
+    Junior=1
+    Middle = 2
+    Senior = 3
+    Lead = 4
 #Usaremos Json Para Guardar Los Datos.
 json_Developers= "DataBaseDevelopers.json"
+
 
 #Abrir Archivo Json
 def JsonDesarrolladores():
@@ -44,7 +52,7 @@ class Habilidades_Programacion:
         self.Level = Level
         self.lenguajes = lenguajes
         self.Añ_Exp = Añ_Exp
-        self.Lenguajes_Trainer = ["CSS","HTML"]
+        self.Lenguajes_Trainee = ["CSS","HTML"]
         self.Lenguajes_Junior = ["JAVASCRIPT","PYTHON"] 
         self.Lenguaje_Middle = ["JAVA","C#","PHP"] 
         self.Lenguaje_Senior = ['RUBY','GO','SWIFT'] 
@@ -66,12 +74,26 @@ class Habilidades_Programacion:
             return "Middle"
         elif any(hab in Empleado.Skill for hab in self.Lenguajes_Junior) and Empleado.añ_exp >=  self.Añ_Junior and Empleado.añ_exp <= self.Añ_Junior+Empleado.añ_exp:
             return "Junior"
-        elif all(hab in Empleado.Skill for hab in self.Lenguajes_Trainer) :
+        elif all(hab in Empleado.Skill for hab in self.Lenguajes_Trainee) :
             return "Trainer"
             
         else:
             print("No se pudo Identificar Lenguaje De Acuerdo A La Base De Datos. Por favor, Verificar o Actualizar La Lista De Habilidades Predeterminadas.")
             return None
+    def GetLenguajesPorNivel(self, nivel):
+        match nivel:
+            case "Trainee":
+                return self.Lenguajes_Trainee
+            case "Junior":
+                return self.Lenguajes_Junior
+            case "Middle":
+                return self.Lenguaje_Middle
+            case "Senior":
+                return self.Lenguaje_Senior
+            case "Lead":
+                return self.Lenguaje_Lead
+            case _:
+                return []
         
 #Lista para almacenar los desarrolladores en memoria "Json"
 listDS = JsonDesarrolladores()
@@ -189,33 +211,41 @@ def Busqueda_Por_Desarrallador():
     else:
         print("Desarrollador No Encontrado.")
 
-       # Crear una instancia de Habilidades_Programacion dentro de la función
-    
-    habilidades_programacion = Habilidades_Programacion(None, None, None)  # Ajusta los parámetros según sea necesario  
+  
     # Acceder a la lista Lenguajes_Junior de la instancia
-    if desarrollador_buscado.Level =="Trainer":
+    match desarrollador_buscado.Level:
+        case "Trainee":
 
-        habilidades_faltantes = list(set(habilidades_programacion.Lenguajes_Junior) - set(desarrollador_buscado.Skill))
-        Años_Exper=habilidades_programacion.Añ_Junior
-        print(f" Pare Ascender a Junior Debe Manejar Alguno De Los Siguiente Lenguajes: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
+            ascender_desarrollador(desarrollador_buscado, "Junior")
+        case "Junior":
 
-    if desarrollador_buscado.Level =="Junior":
-        habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Middle) - set(desarrollador_buscado.Skill))
-        Años_Exper=habilidades_programacion.Añ_Middel
-        print(f" Pare Ascender a Middle Debe Manejar Alguno De Los Siguiente Lenguajes: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
+            ascender_desarrollador(desarrollador_buscado, "Middle")
+        case "Middle":
 
-    if desarrollador_buscado.Level =="Middle":
-        habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Senior) - set(desarrollador_buscado.Skill))
-        Años_Exper=habilidades_programacion.Añ_Senior
-        print(f"Pare Ascender a Senior Debe Manejar Alguno De Los Siguiente Lenguajes:: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
+            ascender_desarrollador(desarrollador_buscado, "Senior")
+        case "Senior":
 
-    if desarrollador_buscado.Level =="Senior":
-        habilidades_faltantes = list(set(habilidades_programacion.Lenguaje_Lead) - set(desarrollador_buscado.Skill))
-        Años_Exper=habilidades_programacion.Añ_Senior
-        print(f"Pare Ascender a Lead Debe Manejar Alguno De Los Siguiente Lenguajes:: {habilidades_faltantes} Y tener Una Experiencia Minima De ({Años_Exper}) Años")
-
-
-
+            ascender_desarrollador(desarrollador_buscado, "Lead")
+     
+def ascender_desarrollador(desarrollador, nivel_deseado):
+     # Crear una instancia de Habilidades_Programacion dentro de la función
+     habilidades_programacion = Habilidades_Programacion(None, None, None)
+     habilidades_nivel = habilidades_programacion.GetLenguajesPorNivel(nivel_deseado);
+     habilidades_faltantes = list(set(habilidades_nivel) - set(desarrollador.Skill))
+     Años_Exper= Anosexp[nivel_deseado].value #este value llama los valores de los niveles (1,2,3,4,5,etc)
+     print(f"Habilidades Faltantes Para Ascender A {nivel_deseado}: {habilidades_faltantes} y {Años_Exper} Años De Experiencia ")
+     print(f"\n\n Desea ascender al desarrollador {desarrollador.Nombre} a {nivel_deseado}?\n 1: Si \n Cualquier otra tecla: No \n")
+     opcion = int(input("Ingrese la opcion deseada: "))
+     if opcion == 1:
+        desarrollador_a_modificar = next((dev for dev in listDS if dev.id == desarrollador.id), None)
+        desarrollador_a_modificar.Skill.extend(habilidades_faltantes)
+        desarrollador_a_modificar.añ_exp = float(Anosexp[nivel_deseado].value)
+        desarrollador_a_modificar.Level = Habilidades_Programacion(desarrollador_a_modificar.Skill, desarrollador_a_modificar.añ_exp, None).Level_Dep(desarrollador_a_modificar)
+        SaveDesarrolladores(listDS)
+        return
+     else: 
+        return
+   
 # El siguiente código solo se ejecutará si este script se ejecuta directamente
 if __name__ == "__main__":
         menu()
